@@ -1,0 +1,36 @@
+@import url(https://fonts.googleapis.com/css?family=Baloo+Paaji|Oswald|Raleway);
+h1 {
+  font-family: "Baloo Paaji", serif; }
+
+h2 {
+  font-family: "Oswald", serif; }
+
+.h1-white-text {
+  font-family: "Baloo Paaji", serif;
+  color: #F2F2F2; }
+
+.material-icons {
+  font-size: 30px;
+  color: #CC3300;
+  padding: 10px; }
+
+.thumb {
+  font-size: 25px; }
+
+video#bgvid {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background: no-repeat;
+  background-size: cover; }
+
+/*# sourceMappingURL=styles.css.map */

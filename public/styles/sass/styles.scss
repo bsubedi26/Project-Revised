@@ -1,0 +1,53 @@
+//google fonts
+@import url(https://fonts.googleapis.com/css?family=Baloo+Paaji|Oswald|Raleway);
+
+$tc: #566683;
+$tcc: #F2F2F2;
+$blk: #000000;
+$gunMetal: #2C3539;
+$red: #CC3300;
+
+//font variables
+$raleway: 'Raleway', serif;
+$baloo-paaji: 'Baloo Paaji', serif;
+$oswald: 'Oswald', serif;
+
+h1 {
+    font-family: $baloo-paaji;
+}
+
+h2 {
+    font-family: $oswald;
+}
+
+.h1-white-text {
+    font-family: $baloo-paaji;
+    color: $tcc;
+}
+.material-icons {
+    font-size: 30px;
+    color: $red;
+    padding: 10px;
+}
+
+.thumb {
+    font-size: 25px;
+}
+
+// main page background video
+video#bgvid { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background: no-repeat;
+    background-size: cover; 
+}
