@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {isEmpty} from'lodash';
-
+import Player from './Player.js'
 
 class MidiArchives extends React.Component {
   
@@ -14,7 +14,8 @@ class MidiArchives extends React.Component {
       midiAnthemNames: [],
       midiLoaded: false,
       input: "",
-      tab: ""
+      tab: "",
+      playing: ""
     }
   }
 
@@ -75,7 +76,6 @@ class MidiArchives extends React.Component {
      console.log(this.state);
      axios.get('/midi/movies').then(function(data) {
       var movieNames = data.data[0];
-      console.log(movieNames)
 
       // Replace midiNames state with new array data
       self.setState({
@@ -87,7 +87,6 @@ class MidiArchives extends React.Component {
 
   getAnthems() {
      var self = this;
-     console.log(this.state);
      axios.get('/midi/anthems').then(function(data) {
       var anthemNames = data.data[0];
 
@@ -100,49 +99,103 @@ class MidiArchives extends React.Component {
   }
 
   play(e) {
-    // Get the name of the midi file to play
-    var name = e.target.getAttribute('data-name');
-    // Get the active nav tab to pass it into the url
-    var activeTab = $('body').find('.active').text().toLowerCase();
-    console.log(activeTab)
+    var self = this;
+    e.preventDefault();
+    var prom = new Promise(function(resolve, reject) {
+      // Get the name of the midi file to play
+      var name = e.target.getAttribute('data-name');
+      if (name) {
+        console.log(name)
+        resolve(name)
+      }
+      else {
+        reject(Error("Error: Cannot play midi"))
+      }
+      
+    })
 
-    var rootDir = '/midi/';
-    MIDIjs.play(rootDir+activeTab+'/'+name);
+    prom.then(function(name) {
+
+      var index = name.indexOf('.');
+      console.log(index)
+
+      var realName = name.slice(0, index);
+      //Replace all _ & - with spaces
+      realName = realName.replace(/_/g, ' ');
+      realName = realName.replace(/-/g, ': ');
+      
+      self.setState({
+        playing: realName
+      })
+      console.log(self.state)
+
+      // Get the active nav tab to pass it into the url
+      // var activeTab = $('body').find('.active').text().toLowerCase();
+      var activeTab = self.state.tab;
+      console.log(activeTab)
+      var rootDir = '/midi/';
+      MIDIjs.play(rootDir+activeTab+'/'+name);
+    })
 
   }
 
   stop(e) {
+    e.preventDefault();
+    // var name = e.target.getAttribute('data-name');
+    MIDIjs.stop();
+  }
+
+  download(e) {
+    e.preventDefault();
+    console.log('dl')
+    // var buffer = new ArrayBuffer(8) // allocates 8 bytes
+    var fileSaver = require('file-saver');
+    // fileSaver.saveAs(new Blob([buffer], {type: "example/binary"}), "data.dat");
     var name = e.target.getAttribute('data-name');
-    MIDIjs.stop('/audio/'+name);
+    console.log(name)
+    var activeTab = $('body').find('.active').text().toLowerCase();
+    var rootDir = '/midi/';
+    // fileSaver.saveAs(rootDir+activeTab+'/'+name)
   }
 
   inputChanged(event) {
+    var self = this;
     var newState = {};
     	newState[event.target.id] = event.target.value;
     	this.setState(newState);
     	console.log(this.state);
+
+
   }
             
   render() {
    var self = this;
 
-   function add(arr) {
+   function selectCategory(arr) {
    return arr.map((midi,i) => {
       //Remove .mid extension
       var midiRealName = midi.slice(0, midi.indexOf('.'))
       //Replace all _ with spaces
       midiRealName = midiRealName.replace(/_/g, ' ');
       midiRealName = midiRealName.replace(/-/g, ': ');
+
       return (
         <div key={i} className="card col-md-6">
         <div key={i} className="card-block">
           <h2 key={i} >{midiRealName}</h2>
-          <a href="#"><i data-name={midi} className="large material-icons" onClick={self.play}>play_arrow</i></a>
-          <a href="#"><i data-name={midi} className="large material-icons" onClick={self.stop}>stop</i></a>
-          <a href="#"><i data-name={midi} className="large material-icons" onClick={self.play}>replay</i></a>
-          <a href="#"><i data-name={midi} className="large material-icons thumb" onClick={self.stop}>thumb_up</i></a>
-          <a href="#"><i data-name={midi} className="large material-icons thumb" onClick={self.stop}>thumb_down</i></a>
-          
+
+            <button data-name={midi} onClick={self.play.bind(self)} type="button" className="controlBtns btn btn-default btn-md">
+            <span className="glyphicon glyphicon-play"></span>
+            </button>
+            <button data-name={midi} onClick={self.stop} type="button" className="controlBtns btn btn-default btn-md">
+            <span className="glyphicon glyphicon-stop"></span>
+            </button>
+            <button data-name={midi} onClick={self.download} type="button" className="controlBtns btn btn-default btn-md">
+            <span className="glyphicon glyphicon-download-alt"></span>
+            </button>
+            <button data-name={midi} onClick={self.play} type="button" className="controlBtns btn btn-default btn-md">
+            <span className="glyphicon glyphicon-star"></span>
+            </button>
           
         </div>
         </div>
@@ -153,9 +206,10 @@ class MidiArchives extends React.Component {
 
         <div>
           
-          <h1 className="text-center">Welcome to the Midi Archives Page!</h1>
+          <h1 className="text-center">Midi Archives Page</h1>
+         
           <hr />
-           <input type="text" onChange={this.inputChanged.bind(this)} className="form-control" id="input" />
+           <input placeholder="Search Archive" type="text" onChange={this.inputChanged.bind(this)} className="form-control" id="input" />
           <hr />
 
             <ul className="nav nav-tabs">
@@ -173,24 +227,25 @@ class MidiArchives extends React.Component {
                 </li>
             </ul>
       
+              <If condition={ self.state.tab === 'contemporary' }>
+                  {selectCategory(self.state.midiContemporaryNames)}
+              </If>
+              
+              <If condition={ self.state.tab === 'games' }>
+                  {selectCategory(self.state.midiGameNames)}
+              </If>
 
-                <If condition={ self.state.tab === 'contemporary' }>
-                    {add(self.state.midiContemporaryNames)}
-                </If>
-                
-                <If condition={ self.state.tab === 'games' }>
-                    {add(self.state.midiGameNames)}
-                </If>
+              <If condition={ self.state.tab === 'movies' }>
+                  {selectCategory(self.state.midiMovieNames)}
+              </If>
 
-                <If condition={ self.state.tab === 'movies' }>
-                    {add(self.state.midiMovieNames)}
-                </If>
-
-                <If condition={ self.state.tab === 'anthems' }>
-                    {add(self.state.midiAnthemNames)}
-                </If>
-                
-          
+              <If condition={ self.state.tab === 'anthems' }>
+                  {selectCategory(self.state.midiAnthemNames)}
+              </If>
+              
+            <div className="footer navbar-fixed-bottom">
+              <Player playing={self.state.playing}/>
+            </div>
         </div>
 
       
@@ -199,25 +254,3 @@ class MidiArchives extends React.Component {
 }
 
 export default MidiArchives;
-
-
-
-//  var self = this;
-//    var midiShow = this.state.midiNames.map((midi,i) => {
-//       //Remove .mid extension
-//       var midiRealName = midi.slice(0, midi.indexOf('.'))
-//       //Replace all _ with spaces
-//       midiRealName = midiRealName.replace(/_/g, ' ');
-//       midiRealName = midiRealName.replace(/-/g, ': ');
-//       return (
-//         <div key={i} className="card col-md-6">
-//         <div key={i} className="card-block">
-//           <h2 key={i} >{midiRealName}</h2>
-//           <a href="#"><i data-name={midi} className="large material-icons" onClick={this.play}>play_arrow</i></a>
-//           <a href="#"><i data-name={midi} className="large material-icons" onClick={this.stop}>stop</i></a>
-//           <a href="#"><i data-name={midi} className="large material-icons" onClick={this.play}>replay</i></a>
-//           <a href="#"><i className="large material-icons">playlist_add</i></a>
-//         </div>
-//         </div>
-//       )
-//     })

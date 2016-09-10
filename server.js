@@ -1,4 +1,4 @@
-const path = require('path');
+ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const webpack = require('webpack');
@@ -20,12 +20,11 @@ app.use(webpackMiddleware(compiler, {
 }));
 app.use(webpackHotMiddleware(compiler));
 
-
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 app.get('/', function response(req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
-  });
+});
 
 // if (isDeveloping) {
 //   const compiler = webpack(config);
@@ -57,6 +56,7 @@ app.get('/', function response(req, res) {
 // }
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
+
 import users from './server/routes/users';
 import auth from './server/routes/auth';
 import events from './server/routes/events';
@@ -67,14 +67,30 @@ app.use('/api/events', events);
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 app.get('/getImages', function(req,res) {
-  console.log(__dirname)
-  fs.readdir('./public/images', (err, files) => {
-    if (err) throw err;
-    // files is an array that have the names of the midi files in the directory (type: array of string)
-    var arr = [];
-    arr.push(files);
-    res.json(arr);
-  })
+  // fs.readdir('./public/images', (err, files) => {
+  //   if (err) throw err;
+  //   // files is an array that have the names of the midi files in the directory (type: array of string)
+  //   var arr = [];
+  //   arr.push(files);
+  //   res.json(arr);
+  // })
+  
+    // fs.readdir('./public/midi/ClassicRock/'+folder, function(err, files) {
+    //       return {artist: folder, midi: files}
+    //   })
+    // artists.forEach(function(folder,i) {
+    //   fs.readdir('./public/midi/ClassicRock'+folder.artist, function(err, midi) {
+    //     console.log(midi)
+    //   })
+    // })
+    
+    // fs.readdir('./public/midi/ClassicRock/')
+    //   value.forEach(function(midi, i) {
+    //     arr.push(midi)
+    //   })
+    // var arr = [];
+    // arr.push(files);
+    // res.json(arr);
 
 });
 
@@ -97,7 +113,6 @@ app.get('/midi/contemporary', function(req,res) {
 
   })
 });
-
 
 app.get('/midi/games', function(req,res) {
   fs.readdir('./public/midi/games', (err, files) => {

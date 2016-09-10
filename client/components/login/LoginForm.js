@@ -20,38 +20,53 @@ class LoginForm extends React.Component {
 
   isValid() {
     // Checks for any empty fields
-    const { errors, isValid } = validateInput(this.state);
+    // const { errors, isValid } = validateInput(this.state);
 
-    if (!isValid) {
-      this.setState({ errors });
-    }
+    // if (!isValid) {
+    //   this.setState({ errors });
+    // }
 
-    return isValid;
+    return true;
   }
 
   onSubmit(e) {
     e.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.login(this.state).then(
-        (res) =>  {
-              var token = localStorage.getItem('jwtToken');
-              this.context.router.push('/')
-              console.log(token)
-                // if(token == undefined) {
-                //     this.context.router.push('/login')
-                // }
-                // else {
-                //   this.context.router.push('/')
-                // }
-        },
-        (err) => {
-          this.setState({ errors: err.response.data.errors, isLoading: false })
-        });
-    }
-    else {
-        this.context.router.push('/login')
-    }
+    this.props.login(this.state).then(
+      
+      (res) => {
+        var token = localStorage.getItem('jwtToken');
+        console.log(token)
+        if (token === null) {
+          this.context.router.push('/signup')
+        }
+        else {
+          this.context.router.push('/')
+        }
+      },
+      (err) => {
+        console.log('error');
+      })
+    // if (this.isValid()) {
+    //   this.setState({ errors: {}, isLoading: true });
+    //   this.props.login(this.state).then(
+    //     (res) =>  {
+    //           var token = localStorage.getItem('jwtToken');
+    //           this.context.router.push('/')
+    //           console.log(token)
+    //             // if(token == undefined) {
+    //             //     this.context.router.push('/login')
+    //             // }
+    //             // else {
+    //             //   this.context.router.push('/')
+    //             // }
+    //     },
+    //     (err) => {
+    //       this.setState({ errors: err.response.data.errors, isLoading: false })
+    //     });
+    // }
+    // else {
+    //     this.context.router.push('/login')
+    // }
   }
 
   onChange(e) {

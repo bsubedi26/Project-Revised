@@ -2,6 +2,7 @@ import axios from 'axios';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import jwtDecode from 'jwt-decode';
 import { SET_CURRENT_USER } from './types';
+import { browserHistory } from 'react-router';
 
 export function setCurrentUser(user) {
   return {
@@ -22,11 +23,17 @@ export function logout() {
 export function login(data) {
   return dispatch => {
     return axios.post('/api/auth', data).then( (res) => {
-      console.log(res)
       const token = res.data.token;
+      console.log(token);
+      // If user credentials is invalid redirect user back to login page
+      if (token === undefined) {
+        browserHistory.push('/#/signup');
+      }
+      else {
       localStorage.setItem('jwtToken', token);
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwtDecode(token)));
+      }
     }).catch( (err) => {console.log("Error: " + err)});
   }
 }

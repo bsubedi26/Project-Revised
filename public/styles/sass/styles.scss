@@ -20,20 +20,28 @@ h2 {
     font-family: $oswald;
 }
 
-.h1-white-text {
+.white-text {
     font-family: $baloo-paaji;
     color: $tcc;
 }
-.material-icons {
-    font-size: 30px;
-    color: $red;
+.controlBtns {
+    color: $tc;
     padding: 10px;
+    margin: 5px;
+    width: 10%;
+}
+.controlBtns:hover {
+   background-color: #8A58B7;
+   box-shadow: 0 .125em rgba(255,255,255,.4), inset 0 .063em rgba(255,255, 255,.4), inset 0 -0.188em #804FAD;
+}
+.controlBtns:active {
+   box-shadow: inset 0 0 1.094em #472566, inset 0 .063em #390668, inset 0 -0.188em #682CA0, 0 .063em rgba(255,255,255,.4); 
 }
 
-.thumb {
-    font-size: 25px;
+.player {
+    background-color: $gunMetal;
+    padding-left: 50px;
 }
-
 // main page background video
 video#bgvid { 
     position: fixed;

@@ -2,9 +2,7 @@ import express from 'express';
 import commonValidations from '../shared/validations/signup';
 import bcrypt from 'bcryptjs';
 import isEmpty from 'lodash/isEmpty';
-// import User_table from '../models/user';
 import users_table from '../models/user';
-
 
 var router = express.Router();
 
@@ -18,6 +16,7 @@ router.post('/', (req, res) => {
 	    bcrypt.hash(password, salt, function(err, hash) {
 	        // Store hash in your password DB. 
 	        if (err) throw err;
+          
           users_table.insert({ 
             username: username, 
             password: hash, 
@@ -26,15 +25,6 @@ router.post('/', (req, res) => {
             console.log('user created!', data);
             res.redirect('/');
           })
-          // new User_table({
-          //     username, 
-          //     password: hash,
-          //     email
-          //     }).save().then(function (newUser) {
-          //       console.log('user created!', newUser);
-    			//       res.redirect('/')
-          // });
-
 
 	    });
 	});

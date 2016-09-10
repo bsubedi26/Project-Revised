@@ -17,8 +17,9 @@ class NavigationBar extends React.Component {
     const userLinks = (
       <ul className="nav navbar-nav navbar-right">
         <li><Link to="/new-event">Add Event</Link></li>
-        <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/midi-archives">Midi Archives</Link></li>
+        <li><Link to="/dashboard">Dashboard</Link></li>
+        <li><Link to="/soundcloud">SoundCloud</Link></li>
         <li><Link to="/">Hello, { this.props.user.username }</Link></li>
         <li><a href="#" onClick={this.logout.bind(this)}>Logout</a></li>
       </ul>
@@ -27,8 +28,9 @@ class NavigationBar extends React.Component {
     const guestLinks = (
       <ul className="nav navbar-nav navbar-right">
         <li><Link to="/new-event">Add Event</Link></li>
-        <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/midi-archives">Midi Archives</Link></li>
+        <li><Link to="/dashboard">Dashboard</Link></li>
+        <li><Link to="/soundcloud">SoundCloud</Link></li>
         <li><Link to="/signup">Sign up</Link></li>
         <li><Link to="/login">Login</Link></li>
       </ul>

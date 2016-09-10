@@ -1,14 +1,7 @@
-// import db from '../db/bookshelf';
-// var User_table = db.Model.extend({
-//   tableName: 'users'
-// });
-// module.exports = User_table;
-
-
+// monk DB config
 var monk = require('monk');
-var db2 = monk('localhost:27017/REACT');
+var db = monk('localhost:27017/REACT');
 
-var users_table = db2.get('user');
+// export users table so it can be used in the routes 
+var users_table = db.get('user');
 module.exports = users_table;
-
-
