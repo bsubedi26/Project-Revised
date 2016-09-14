@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import {isEmpty} from'lodash';
-import Player from './Player.js'
+import Player from './Player.js';
+import { connect } from 'react-redux';
 
 class MidiArchives extends React.Component {
   
@@ -12,6 +13,7 @@ class MidiArchives extends React.Component {
       midiGameNames: [],
       midiMovieNames: [],
       midiAnthemNames: [],
+      favorites: [],
       midiLoaded: false,
       input: "",
       tab: "",
@@ -21,8 +23,6 @@ class MidiArchives extends React.Component {
 
   componentDidMount() {
     var self = this;
-
-    this.getContemporary();
  
     $(document).ready(function () {
         $('ul.nav-tabs > li').click(function (e) {
@@ -41,9 +41,21 @@ class MidiArchives extends React.Component {
     
   }
 
+  componentWillUnmount() {
+    var self = this;
+    const {userInfo} = this.props;
+    var username = userInfo.user.username;
+    axios.post('/api/midi/addFavorites', {
+      user: username,
+      favorites: self.state.favorites
+    }).then(function() {
+      console.log('axios .then triggered')
+    })
+  }
+
   getContemporary() {
   var self = this;
-    axios.get('/midi/contemporary').then(function(data) {
+    axios.get('/api/midi/contemporary').then(function(data) {
         var midiNames = data.data[0];
         self.setState({
             midiContemporaryNames: midiNames
@@ -56,7 +68,7 @@ class MidiArchives extends React.Component {
   getGames() {
      var self = this;
     //  console.log(this.state);
-     axios.get('/midi/games').then(function(data) {
+     axios.get('/api/midi/games').then(function(data) {
       var gameNames = data.data[0];
 
       self.setState({
@@ -74,7 +86,7 @@ class MidiArchives extends React.Component {
   getMovies() {
      var self = this;
      console.log(this.state);
-     axios.get('/midi/movies').then(function(data) {
+     axios.get('/api/midi/movies').then(function(data) {
       var movieNames = data.data[0];
 
       // Replace midiNames state with new array data
@@ -87,7 +99,7 @@ class MidiArchives extends React.Component {
 
   getAnthems() {
      var self = this;
-     axios.get('/midi/anthems').then(function(data) {
+     axios.get('/api/midi/anthems').then(function(data) {
       var anthemNames = data.data[0];
 
       // Replace midiNames state with new array data
@@ -147,15 +159,16 @@ class MidiArchives extends React.Component {
 
   download(e) {
     e.preventDefault();
-    console.log('dl')
-    // var buffer = new ArrayBuffer(8) // allocates 8 bytes
-    var fileSaver = require('file-saver');
-    // fileSaver.saveAs(new Blob([buffer], {type: "example/binary"}), "data.dat");
     var name = e.target.getAttribute('data-name');
-    console.log(name)
-    var activeTab = $('body').find('.active').text().toLowerCase();
-    var rootDir = '/midi/';
-    // fileSaver.saveAs(rootDir+activeTab+'/'+name)
+    console.log(name);
+  }
+
+  favorite(e) {
+    var self = this;
+    e.preventDefault();
+    var name = e.target.getAttribute('data-name');
+    console.log(name);
+    self.state.favorites.push(name);
   }
 
   inputChanged(event) {
@@ -164,8 +177,6 @@ class MidiArchives extends React.Component {
     	newState[event.target.id] = event.target.value;
     	this.setState(newState);
     	console.log(this.state);
-
-
   }
             
   render() {
@@ -181,19 +192,22 @@ class MidiArchives extends React.Component {
 
       return (
         <div key={i} className="card col-md-6">
-        <div key={i} className="card-block">
-          <h2 key={i} >{midiRealName}</h2>
+        <div key={i} className="card-block well">
+          <h2 key={i}>{midiRealName}</h2>
 
             <button data-name={midi} onClick={self.play.bind(self)} type="button" className="controlBtns btn btn-default btn-md">
             <span className="glyphicon glyphicon-play"></span>
             </button>
-            <button data-name={midi} onClick={self.stop} type="button" className="controlBtns btn btn-default btn-md">
+            
+            <button data-name={midi} onClick={self.stop.bind(self)} type="button" className="controlBtns btn btn-default btn-md">
             <span className="glyphicon glyphicon-stop"></span>
             </button>
-            <button data-name={midi} onClick={self.download} type="button" className="controlBtns btn btn-default btn-md">
+
+            <a href={'/midi/'+self.state.tab+'/'+midi}> <button data-name={midi} type="button" className="controlBtns btn btn-default btn-md">
             <span className="glyphicon glyphicon-download-alt"></span>
-            </button>
-            <button data-name={midi} onClick={self.play} type="button" className="controlBtns btn btn-default btn-md">
+            </button></a>
+
+            <button data-name={midiRealName} onClick={self.favorite.bind(self)} type="button" className="controlBtns btn btn-default btn-md">
             <span className="glyphicon glyphicon-star"></span>
             </button>
           
@@ -226,7 +240,7 @@ class MidiArchives extends React.Component {
                     <a className="nav-link" onClick={this.getAnthems.bind(this)} href="#">Anthems</a>
                 </li>
             </ul>
-      
+            <div>
               <If condition={ self.state.tab === 'contemporary' }>
                   {selectCategory(self.state.midiContemporaryNames)}
               </If>
@@ -242,6 +256,7 @@ class MidiArchives extends React.Component {
               <If condition={ self.state.tab === 'anthems' }>
                   {selectCategory(self.state.midiAnthemNames)}
               </If>
+              </div>
               
             <div className="footer navbar-fixed-bottom">
               <Player playing={self.state.playing}/>
@@ -253,4 +268,14 @@ class MidiArchives extends React.Component {
   }
 }
 
-export default MidiArchives;
+MidiArchives.propTypes = {
+  userInfo: React.PropTypes.object.isRequired
+}
+
+function mapStateToProps(state) {
+  return {
+    userInfo: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(MidiArchives);

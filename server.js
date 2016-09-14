@@ -6,11 +6,13 @@ const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
 const fs = require('fs');
-
+var cors = require('cors');
 const app = express();
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
+app.use(cors());
 
 const compiler = webpack(config);
 app.use(webpackMiddleware(compiler, {
@@ -56,93 +58,17 @@ app.get('/', function response(req, res) {
 // }
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
-
 import users from './server/routes/users';
 import auth from './server/routes/auth';
 import events from './server/routes/events';
+import midi from './server/routes/midi';
+import authenticate from './server/middlewares/authenticate';
 
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/events', events);
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-app.get('/getImages', function(req,res) {
-  // fs.readdir('./public/images', (err, files) => {
-  //   if (err) throw err;
-  //   // files is an array that have the names of the midi files in the directory (type: array of string)
-  //   var arr = [];
-  //   arr.push(files);
-  //   res.json(arr);
-  // })
-  
-    // fs.readdir('./public/midi/ClassicRock/'+folder, function(err, files) {
-    //       return {artist: folder, midi: files}
-    //   })
-    // artists.forEach(function(folder,i) {
-    //   fs.readdir('./public/midi/ClassicRock'+folder.artist, function(err, midi) {
-    //     console.log(midi)
-    //   })
-    // })
-    
-    // fs.readdir('./public/midi/ClassicRock/')
-    //   value.forEach(function(midi, i) {
-    //     arr.push(midi)
-    //   })
-    // var arr = [];
-    // arr.push(files);
-    // res.json(arr);
+app.use('/api/midi', authenticate, midi);
 
-});
-
-app.get('/midi/contemporary', function(req,res) {
-  fs.readdir('./public/midi/contemporary', (err, files) => {
-    if (err) throw err;
-    // files is an array that have the names of the midi files in the directory (type: array of strings)
-    var arr = [];
-    arr.push(files);
-    res.json(arr);
-
-    //Create an object from the array of files 
-    // var newArray = arr.map(function(file, i) {
-    //   return {
-    //     name: file,
-    //     liked: false,
-    //     count: 0
-    //   }
-    // })
-
-  })
-});
-
-app.get('/midi/games', function(req,res) {
-  fs.readdir('./public/midi/games', (err, files) => {
-    if (err) throw err;
-    // files is an array that have the names of the midi files in the directory (type: array of string)
-    var arr = [];
-    arr.push(files);
-    res.json(arr);
-  })
-});
-
-app.get('/midi/movies', function(req,res) {
-  fs.readdir('./public/midi/movies', (err, files) => {
-    if (err) throw err;
-    // files is an array that have the names of the midi files in the directory (type: array of string)
-    var arr = [];
-    arr.push(files);
-    res.json(arr);
-  })
-});
-
-app.get('/midi/anthems', function(req,res) {
-  fs.readdir('./public/midi/anthems', (err, files) => {
-    if (err) throw err;
-    // files is an array that have the names of the midi files in the directory (type: array of string)
-    var arr = [];
-    arr.push(files);
-    res.json(arr);
-  })
-});
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 app.listen(port, '0.0.0.0', function onStart(err) {

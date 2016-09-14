@@ -1,9 +1,5 @@
 import { ADD_DATA } from '../actions/types';
 
-// var data = {
-//     name: "Daveo",
-//     favoriteColor: "red"
-// }
 export default (state = [], action = {}) => {
   
   switch (action.type) {

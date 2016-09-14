@@ -1,77 +1,85 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       input: '',
-      midiNames: [],
-      imgNames: [],
+      favoriteMidi: [],
       imgLoaded: false
     };
+  }
+
+  getUserInfo() {
+    var self = this;
+    // const {userInfo} = this.props;
+    axios.get('/api/midi/getFavorites').then( (userData) => {
+      self.setState({
+        favoriteMidi: userData.data.favoriteMidis
+      })
+
+      console.log(self.state)
+
+    })
+
 
   }
 
-getImages() {
-  var self = this;
-    // GET Image request
-     axios.get('/getImages').then(function(data) {
-        var images = data.data[0]
-        console.log(images)
-        self.setState({
-        imgNames: images
-      })
-        self.setState({
-          imgLoaded: true
-        })
-      
-     })
-}
-
   componentDidMount() {
-    
-    this.getImages();
-
+    this.getUserInfo();
   }
 
   inputChanged(e) {
-    var obj = {id: e.target.id, value: e.target.value}
-    // console.log(obj)
+    var obj = {}
+    obj[e.target.id] = e.target.value
     this.setState(obj)
-      console.log(this.state)
+    // console.log(this.state)
+    
   }
  
   render() {
-    var photos = this.state.imgNames.map((photo,i) => {
-      return (
-        
-          <div key={photo} className="card col-md-3">
-          <img className="card-img-top" alt={photo} width="250" height="200" key={i} src={"images/"+photo} />
-          <div key={photo} className="card-block">
-            <p key={photo} className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-          </div>
-      )
-    })
+    var self = this;
+    const {userInfo} = this.props;
 
     return (
 
         <div>
-          <h1 className="text-center">Welcome to the Dashboard Page!</h1>
+          <h1 className="text-center">Welcome to the User Dashboard Page!</h1>
           <hr />
-            <div className="form-group">
-              <input type="text" onChange={this.inputChanged.bind(this)} className="form-control" id="input" />
-                <hr />
 
-                {photos}
+          <div className="row">
+
+            <div className="col-md-4 well">
+              <h1>User Information</h1>
+              <h2>Username: {userInfo.user.username}</h2>
+              <h2>Email: {userInfo.user.email}</h2>
+            </div>
+
+            <div className="col-md-4 well col-md-offset-1">
+              <h1>User Favorites</h1>
+                {self.state.favoriteMidi.map( (midi, i) => {
+                  return <h2 key={i}>{i}: {midi}</h2>
+                })}
+            </div>
+
+          </div>
 
         </div>
-          
-        </div>
 
-      
     );
   }
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  userInfo: React.PropTypes.object.isRequired
+}
+
+function mapStateToProps(state) {
+  return {
+    userInfo: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard);

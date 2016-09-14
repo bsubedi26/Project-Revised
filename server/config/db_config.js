@@ -6,13 +6,6 @@ db.on('error', function (err) {
   console.log('MongoDB Error: ', err);
 });
 db.on('connect', function () {
-    console.log('database connected')
+    console.log('database connected using mongojs');
 })
-
 module.exports = db;
-
-// monk DB config
-// var monk = require('monk');
-// var db2 = monk('localhost:27017/REACT');
-// var users_table = db2.get('user');
-// module.exports = users_table;

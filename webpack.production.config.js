@@ -49,10 +49,8 @@ module.exports = {
       loader: 'babel',
       query: {
         "plugins": [
-            "transform-decorators-legacy",
-            "transform-decorators",
-            "transform-class-properties",
-            "jsx-control-statements"
+            "jsx-control-statements",
+            "transform-class-properties"
         ],
         "presets": ["es2015", "stage-0", "react"]
       }

@@ -2,30 +2,29 @@ import express from 'express';
 import commonValidations from '../shared/validations/signup';
 import bcrypt from 'bcryptjs';
 import isEmpty from 'lodash/isEmpty';
-import users_table from '../models/user';
 
+var db = require('../config/db_config.js');
 var router = express.Router();
 
+// POST route for creating new user
 router.post('/', (req, res) => {
-  console.log('user sign up post received')
+  console.log('new user sign up post received');
   const { username, password, email } = req.body;
 
   // creating the user by inserting the user info into the db
 	bcrypt.genSalt(10, function(err, salt) {
 	    if (err) throw err;
 	    bcrypt.hash(password, salt, function(err, hash) {
-	        // Store hash in your password DB. 
+	        // Store hash in the password DB. 
 	        if (err) throw err;
           
-          users_table.insert({ 
+          db.user.insert({ 
             username: username, 
             password: hash, 
             email: email
-          }).then(function(data){
-            console.log('user created!', data);
-            res.redirect('/');
-          })
-
+          }, function(data) {
+              res.redirect('/');
+          });
 	    });
 	});
 

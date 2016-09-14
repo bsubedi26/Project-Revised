@@ -1,4 +1,25 @@
 @import url(https://fonts.googleapis.com/css?family=Baloo+Paaji|Oswald|Raleway);
+.tab-content {
+  background-color: #303136;
+  color: #fff;
+  padding: 5px; }
+
+.nav-tabs > li > a {
+  background-color: #333333;
+  border-color: #777777;
+  color: #fff; }
+
+/* active tab color */
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  color: #fff;
+  background-color: #666;
+  border: 1px solid #888888; }
+
+/* hover tab color */
+.nav-tabs > li > a:hover {
+  border-color: #000000;
+  background-color: #111111; }
+
 h1 {
   font-family: "Baloo Paaji", serif; }
 
