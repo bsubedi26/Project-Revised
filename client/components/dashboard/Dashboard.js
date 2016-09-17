@@ -15,14 +15,14 @@ class Dashboard extends React.Component {
   getUserInfo() {
     var self = this;
     // const {userInfo} = this.props;
-    axios.get('/api/midi/getFavorites').then( (userData) => {
-      self.setState({
-        favoriteMidi: userData.data.favoriteMidis
-      })
+    // axios.get('/api/midi/getFavorites').then( (userData) => {
+    //   self.setState({
+    //     favoriteMidi: userData.data.favoriteMidis
+    //   })
 
-      console.log(self.state)
+    //   console.log(self.state)
 
-    })
+    // })
 
 
   }
@@ -60,7 +60,7 @@ class Dashboard extends React.Component {
             <div className="col-md-4 well col-md-offset-1">
               <h1>User Favorites</h1>
                 {self.state.favoriteMidi.map( (midi, i) => {
-                  return <h2 key={i}>{i}: {midi}</h2>
+                  return <h2 key={i}>{midi}</h2>
                 })}
             </div>
 

@@ -8,7 +8,6 @@ import LoginPage from './components/login/LoginPage';
 import NewEventPage from './components/events/NewEventPage';
 import Dashboard from './components/dashboard/Dashboard';
 import MidiArchives from './components/midi/MidiArchives';
-import SoundCloud from './components/soundcloud/SoundCloud';
 import Scraper from './components/scraper/Scraper';
 
 import requireAuth from './utils/requireAuth';
@@ -21,7 +20,6 @@ export default (
     <Route path="new-event" component={NewEventPage} />
     <Route path="dashboard" component={requireAuth(Dashboard)} />
     <Route path="midi-archives" component={requireAuth(MidiArchives)} />
-    <Route path="soundcloud" component={SoundCloud} />
     <Route path="scrape" component={Scraper} />
   </Route>
 )

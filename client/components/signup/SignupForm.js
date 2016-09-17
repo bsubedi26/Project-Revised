@@ -78,8 +78,8 @@ class SignupForm extends React.Component {
     const { errors } = this.state;
     
     return (
-      <form onSubmit={this.onSubmit}>
-        <h1>Join our community!</h1>
+      <form className="well" onSubmit={this.onSubmit}>
+        <h1 className="text-center">Join the community!</h1>
 
         <TextFieldGroup
           error={errors.username}
@@ -117,7 +117,7 @@ class SignupForm extends React.Component {
           type="password"
         />
         <div className="form-group">
-          <button disabled={this.state.isLoading || this.state.invalid} className="btn btn-primary btn-lg">
+          <button disabled={this.state.isLoading || this.state.invalid} className="center-block btn btn-primary btn-lg">
             Sign up
           </button>
         </div>

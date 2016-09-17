@@ -12,9 +12,10 @@ $raleway: 'Raleway', serif;
 $baloo-paaji: 'Baloo Paaji', serif;
 $oswald: 'Oswald', serif;
 
-// .nav-tabs{
-//   background-color:$tc;
-// }
+.videos {
+    padding: 10px;
+    
+}
 .tab-content{
     background-color:#303136;
     color:#fff;
@@ -42,6 +43,11 @@ $oswald: 'Oswald', serif;
 
 h1 {
     font-family: $baloo-paaji;
+}
+
+h3 {
+    font-family: $raleway;
+    font-size: 20px;
 }
 
 h2 {

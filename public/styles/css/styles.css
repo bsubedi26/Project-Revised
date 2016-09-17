@@ -1,4 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Baloo+Paaji|Oswald|Raleway);
+.videos {
+  padding: 10px; }
+
 .tab-content {
   background-color: #303136;
   color: #fff;
@@ -22,6 +25,10 @@
 
 h1 {
   font-family: "Baloo Paaji", serif; }
+
+h3 {
+  font-family: "Raleway", serif;
+  font-size: 20px; }
 
 h2 {
   font-family: "Oswald", serif; }
