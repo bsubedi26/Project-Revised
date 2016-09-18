@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const app = express();
 
+console.log('new branch')
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/dist'));
