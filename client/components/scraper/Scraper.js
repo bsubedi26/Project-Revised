@@ -1,34 +1,35 @@
 import React from 'react';
 import axios from 'axios';
-// var youtubeVideo = require('youtube-video');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 class Scraper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       input: '',
-      videos: []
+      videos: [],
+      isLoading: true
     };
   }
 
   componentDidMount() {
-    var self = this;
     // axios.get('/api/scrape/test').then( (audio) => {
     //   console.log(audio)
     // })
 
     axios.get('/api/scrape/get').then( (data) => {
       console.log(data)
-      self.setState({
+      this.setState({
         videos: data.data
       })
     })
-    
 
-    // youtubeVideo('https://www.youtube.com/watch?v=rfh4Mhp-a6U', function (error, playback) {
-    //  if (error) throw error;
-    // //  playback.playVideo()
-    // })
+    if($('body').find('.videos'.length > 21)) {
+      this.setState({
+        isLoading: false
+      })
+    }
+
   }
 
   inputChanged(e) {
@@ -46,14 +47,16 @@ class Scraper extends React.Component {
           <div key={i} className="well col-md-6 videos">
             <h3>{video.title}</h3>
 
-            <object width="500" height="320">
+            <object className="embed-responsive embed-responsive-16by9" width="500" height="320">
               <param name="allowscriptaccess" value="always"/>
-              <embed id={video.title} width="500" height="320" src={video.link} className="youtube-player" type="text/html" allowscriptaccess="always" allowFullScreen="true"/>
+              <embed id={video.title} width="500" height="320" src={video.link} className="youtube-player embed-responsive-item" type="text/html" />
             </object>
 
           </div>
+          
         )
-    }) 
+    })
+
     return (
 
         <div>
@@ -62,7 +65,12 @@ class Scraper extends React.Component {
           <input className="form-control" onChange={self.inputChanged.bind(self)} id="input" type="text"/>
           <hr />
 
-          {vids}
+          <ReactCSSTransitionGroup
+              transitionName="fade" 
+              transitionEnterTimeout={1000} 
+              transitionLeaveTimeout={2000}>
+              {vids}
+          </ReactCSSTransitionGroup>
 
       </div>
 

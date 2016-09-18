@@ -3,6 +3,7 @@ import axios from 'axios';
 import {isEmpty} from'lodash';
 import Player from './Player.js';
 import { connect } from 'react-redux';
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 class MidiArchives extends React.Component {
   
@@ -13,7 +14,10 @@ class MidiArchives extends React.Component {
       games: [],
       movies: [],
       anthems: [],
-      favorites: [],
+      blues: [],
+      jazz: [],
+      gospel: [],
+      classical: [],
       input: "",
       tab: "",
       playing: "",
@@ -34,7 +38,8 @@ class MidiArchives extends React.Component {
           self.setState({
             tab: activeTab
           })
-      });            
+          
+      });
     
   }
 
@@ -42,17 +47,7 @@ class MidiArchives extends React.Component {
     var self = this;
     const {userInfo} = this.props;
     var username = userInfo.user.username;
-  }
-
-  getContemporary() {
-  var self = this;
-  axios.get('/api/midi/contemporary').then(function(data) {
-    var midiNames = data.data[0];
-      self.setState({
-          contemporary: midiNames,
-          tmp: midiNames
-      })
-    })
+    
   }
 
   getDynamic(e) {
@@ -71,33 +66,30 @@ class MidiArchives extends React.Component {
 
   }
 
+  search(genre, input) {
+    var self = this;
+    var searchMatches = [];
+    
+    switch(self.state.tab) {
+      case(genre):
+        self.state.tmp.forEach(function(word,i) {
+          if (word.toLowerCase().indexOf(input) === 0) {
+            searchMatches.push(word)
+          }
+        })
+        self.setState({
+          [genre]: searchMatches
+        })
+
+
+    }
+  }
+
   inputChanged(event) {
     var self = this;
     var searchMatches = [];
     console.log(self.state)
-
-    // Allow user to filter search the files depending on the active tab
-     switch(self.state.tab) {
-      case('contemporary'):
-        self.state.tmp.forEach(function(word,i) {
-          if (word.toLowerCase().indexOf(event.target.value.toLowerCase()) === 0) {
-            searchMatches.push(word)
-          }
-        })
-        self.setState({
-          contemporary: searchMatches
-        })
-
-      case('games'):
-        self.state.tmp.forEach(function(word,i) {
-          if (word.toLowerCase().indexOf(event.target.value.toLowerCase()) === 0) {
-            searchMatches.push(word)
-          }
-        })
-        self.setState({
-          games: searchMatches
-        })
-    }
+    self.search(self.state.tab, event.target.value.toLowerCase())
 
   }
             
@@ -129,15 +121,6 @@ class MidiArchives extends React.Component {
     MIDIjs.stop();
   }
 
-  favorite(e) {
-    var self = this;
-    e.preventDefault();
-    var name = e.target.getAttribute('data-name');
-    console.log(name);
-    self.state.favorites.push(name);
-    console.log(self.state);
-  }
-  
   render() {
    var self = this;
 
@@ -165,10 +148,6 @@ class MidiArchives extends React.Component {
             <a href={'/midi/'+self.state.tab+'/'+midi}> <button data-name={midi} type="button" className="controlBtns btn btn-default btn-md">
             <span data-name={midi} className="glyphicon glyphicon-download-alt"></span>
             </button></a>
-
-            <button data-name={midiRealName} onClick={self.favorite.bind(self)} type="button" className="controlBtns btn btn-default btn-md">
-            <span data-name={midiRealName} className="glyphicon glyphicon-star"></span>
-            </button>
           
         </div>
         </div>
@@ -180,7 +159,6 @@ class MidiArchives extends React.Component {
         <div>
           
           <h1 className="text-center">Midi Archives Page</h1>
-          
          
           <hr />
            <input placeholder="Quick Search" type="text" onChange={this.inputChanged.bind(this)} className="form-control" id="input" />
@@ -199,27 +177,94 @@ class MidiArchives extends React.Component {
                  <li className="nav-item">
                     <a className="nav-link" onClick={this.getDynamic.bind(this)} href="#">Anthems</a>
                 </li>
-                
-
-
-
+                <li className="nav-item">
+                    <a className="nav-link" onClick={this.getDynamic.bind(this)} href="#">Blues</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" onClick={this.getDynamic.bind(this)} href="#">Jazz</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" onClick={this.getDynamic.bind(this)} href="#">Gospel</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" onClick={this.getDynamic.bind(this)} href="#">Classical</a>
+                </li>
             </ul>
+
             <div>
+
               <If condition={ self.state.tab === 'contemporary' }>
-                  {selectCategory(self.state.contemporary)}
+                <ReactCSSTransitionGroup
+                  transitionName="fade" 
+                  transitionEnterTimeout={1000} 
+                  transitionLeaveTimeout={2000}>
+                    {selectCategory(self.state.contemporary)}
+                </ReactCSSTransitionGroup>
               </If>
-              
+
               <If condition={ self.state.tab === 'games' }>
-                  {selectCategory(self.state.games)}
+                <ReactCSSTransitionGroup
+                  transitionName="fade" 
+                  transitionEnterTimeout={1000} 
+                  transitionLeaveTimeout={2000}>
+                    {selectCategory(self.state.games)}
+                </ReactCSSTransitionGroup>
               </If>
 
               <If condition={ self.state.tab === 'movies' }>
-                  {selectCategory(self.state.movies)}
+                <ReactCSSTransitionGroup
+                  transitionName="fade" 
+                  transitionEnterTimeout={1000} 
+                  transitionLeaveTimeout={2000}>
+                    {selectCategory(self.state.movies)}
+                </ReactCSSTransitionGroup>
               </If>
 
               <If condition={ self.state.tab === 'anthems' }>
-                  {selectCategory(self.state.anthems)}
+                <ReactCSSTransitionGroup
+                  transitionName="fade" 
+                  transitionEnterTimeout={1000} 
+                  transitionLeaveTimeout={2000}>
+                    {selectCategory(self.state.anthems)}
+                </ReactCSSTransitionGroup>
+            </If>
+
+              <If condition={ self.state.tab === 'blues' }>
+                <ReactCSSTransitionGroup
+                  transitionName="fade" 
+                  transitionEnterTimeout={1000} 
+                  transitionLeaveTimeout={2000}>
+                    {selectCategory(self.state.blues)}
+                </ReactCSSTransitionGroup>
               </If>
+
+              <If condition={ self.state.tab === 'jazz' }>
+                <ReactCSSTransitionGroup
+                  transitionName="fade" 
+                  transitionEnterTimeout={1000} 
+                  transitionLeaveTimeout={2000}>
+                    {selectCategory(self.state.jazz)}
+                </ReactCSSTransitionGroup>
+              </If>
+
+              <If condition={ self.state.tab === 'gospel' }>
+                <ReactCSSTransitionGroup
+                  transitionName="fade" 
+                  transitionEnterTimeout={1000} 
+                  transitionLeaveTimeout={2000}>
+                    {selectCategory(self.state.gospel)}
+                </ReactCSSTransitionGroup>
+              </If>
+
+              <If condition={ self.state.tab === 'classical' }>
+                <ReactCSSTransitionGroup
+                  transitionName="fade" 
+                  transitionEnterTimeout={1000} 
+                  transitionLeaveTimeout={2000}>
+                    {selectCategory(self.state.classical)}
+                </ReactCSSTransitionGroup>
+            </If>
+
             </div>
               
             <div className="footer navbar-fixed-bottom">

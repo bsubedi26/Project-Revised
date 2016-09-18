@@ -52,36 +52,6 @@ router.post('/addFavorites', function(req,res) {
 //   })
 // });
 
-// router.get('/games', function(req,res) {
-//   fs.readdir(path.join(__dirname, '../../public/midi/games'), (err, files) => {
-//     if (err) throw err;
-//     // files is an array that have the names of the midi files in the directory (type: array of string)
-//     var arr = [];
-//     arr.push(files);
-//     res.json(arr);
-//   })
-// });
-
-// router.get('/movies', function(req,res) {
-//   fs.readdir(path.join(__dirname, '../../public/midi/movies'), (err, files) => {
-//     if (err) throw err;
-//     // files is an array that have the names of the midi files in the directory (type: array of string)
-//     var arr = [];
-//     arr.push(files);
-//     res.json(arr);
-//   })
-// });
-
-// router.get('/anthems', function(req,res) {
-//   fs.readdir(path.join(__dirname, '../../public/midi/anthems'), (err, files) => {
-//     if (err) throw err;
-//     // files is an array that have the names of the midi files in the directory (type: array of string)
-//     var arr = [];
-//     arr.push(files);
-//     res.json(arr);
-//   })
-// });
-
 router.get('/folder/:name', function(req,res) {
   var name = req.params.name;
 
