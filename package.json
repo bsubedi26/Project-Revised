@@ -43,6 +43,7 @@
     "react": "latest",
     "react-addons-css-transition-group": "^15.3.1",
     "react-dom": "latest",
+    "react-dropzone": "^3.6.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "redux": "^3.6.0",

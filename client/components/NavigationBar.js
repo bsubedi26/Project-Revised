@@ -9,6 +9,11 @@ class NavigationBar extends React.Component {
     this.props.logout();
   }
 
+  clicked() {
+    // console.log('as')
+    // window.location.href='/youtube'
+  }
+
   render() {
     const { isAuthenticated } = this.props.auth;
     const username = localStorage.getItem('username');
@@ -16,10 +21,9 @@ class NavigationBar extends React.Component {
     // Navigation links if the user is authenticated and logged in
     const userLinks = (
       <ul className="nav navbar-nav navbar-right">
-        <li><Link to="/new-event">Add Event</Link></li>
-        <li><Link to="/scrape">Video Scrapes</Link></li>
         <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/midi-archives">Midi Archives</Link></li>
+        <li onClick={this.clicked.bind(this)}><Link to="/youtube">Youtube Search</Link></li>
         <li><Link to="/">Hello, { this.props.user.username }</Link></li>
         <li><a href="#" onClick={this.logout.bind(this)}>Logout</a></li>
       </ul>
@@ -27,20 +31,18 @@ class NavigationBar extends React.Component {
     // Navigation links if the user is not logged in
     const guestLinks = (
       <ul className="nav navbar-nav navbar-right">
-        <li><Link to="/new-event">Add Event</Link></li>
-        <li><Link to="/scrape">Video Scrapes</Link></li>
         <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/midi-archives">Midi Archives</Link></li>
-        <li><Link to="/signup">Sign up</Link></li>
+        <li onClick={this.clicked.bind(this)}><Link to="/youtube">Youtube Search</Link></li>
         <li><Link to="/login">Login</Link></li>
       </ul>
     );
 
     return (
-      <nav className="navbar navbar-inverse">
+      <nav className="navbar navbar-inverse navbar-fixed-top">
         <div className="container-fluid">
           <div className="navbar-header">
-            <Link to="/" className="navbar-brand">Mid-Inspire</Link>
+            <Link to="/" className="navbar-brand">Project</Link>
           </div>
 
           <div className="collapse navbar-collapse">

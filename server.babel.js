@@ -22,10 +22,9 @@ app.use('/api/auth', auth);
 app.use('/api/events', events);
 app.use('/api/midi', authenticate, midi);
 app.use('/api/scrape', scrape);
-
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, function(err) {
 	if (err) throw err;
 	console.info('==> 🌎 Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', PORT, PORT);

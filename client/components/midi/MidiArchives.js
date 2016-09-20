@@ -145,8 +145,8 @@ class MidiArchives extends React.Component {
             <span data-name={midi} className="glyphicon glyphicon-stop"></span>
             </button>
 
-            <a href={'/midi/'+self.state.tab+'/'+midi}> <button data-name={midi} type="button" className="controlBtns btn btn-default btn-md">
-            <span data-name={midi} className="glyphicon glyphicon-download-alt"></span>
+            <a href={`/midi/${self.state.tab}/${midi}`}><button data-name={midi} type="button" className="controlBtns btn btn-default btn-md">
+              <span data-name={midi} className="glyphicon glyphicon-download-alt"></span>
             </button></a>
           
         </div>
@@ -158,7 +158,7 @@ class MidiArchives extends React.Component {
 
         <div>
           
-          <h1 className="text-center">Midi Archives Page</h1>
+          <h1 className="text-center">Midi Archives</h1>
          
           <hr />
            <input placeholder="Quick Search" type="text" onChange={this.inputChanged.bind(this)} className="form-control" id="input" />
@@ -190,6 +190,8 @@ class MidiArchives extends React.Component {
                     <a className="nav-link" onClick={this.getDynamic.bind(this)} href="#">Classical</a>
                 </li>
             </ul>
+
+            <hr />
 
             <div>
 

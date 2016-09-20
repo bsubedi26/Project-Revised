@@ -54,7 +54,7 @@ class LoginForm extends React.Component {
     const { errors, identifier, password, isLoading } = this.state;
 
     return (
-      <form className="well" onSubmit={this.onSubmit}>
+      <form className="well login-form" onSubmit={this.onSubmit}>
         <h1 className="text-center">Login</h1>
 
         { errors.form && <div className="alert alert-danger">{errors.form}</div> }
@@ -76,7 +76,7 @@ class LoginForm extends React.Component {
           type="password"
         />
 
-        <div className="form-group"><button className="center-block btn btn-primary btn-lg" disabled={isLoading}>Login</button></div>
+        <div className="form-group"><button className="center-block well-button btn btn-primary btn-block btn-lg" disabled={isLoading}>Login</button></div>
       </form>
     );
   }

@@ -1,6 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Baloo+Paaji|Oswald|Raleway);
+@import url(https://fonts.googleapis.com/css?family=Noto+Serif:400i);
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+@import url(http://fonts.googleapis.com/css?family=Lekton);
+@import url(https://fonts.googleapis.com/css?family=EB+Garamond);
 .videos {
   padding: 10px; }
+
+.nav-item {
+  width: 25%;
+}
+
+.nav-bar > li > a {
+  font-family: 'Noto Serif', serif;
+}
 
 .tab-content {
   background-color: #303136;
@@ -10,7 +22,10 @@
 .nav-tabs > li > a {
   background-color: #333333;
   border-color: #777777;
-  color: #fff; }
+  color: #fff; 
+  font-family: 'Molengo', Georgia, Times, serif;
+  font-size: 20px;
+}
 
 /* active tab color */
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
@@ -22,9 +37,6 @@
 .nav-tabs > li > a:hover {
   border-color: #000000;
   background-color: #111111; }
-
-h1 {
-  font-family: "Baloo Paaji", serif; }
 
 h3 {
   font-family: "Raleway", serif;

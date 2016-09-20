@@ -9,10 +9,8 @@ class App extends React.Component {
 
       <div>
         <NavigationBar />
-          <div className="container">
-            <FlashMessagesList />
+            
             {this.props.children}
-          </div>
       </div>
 
     );
