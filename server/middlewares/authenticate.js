@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from '../config';
-import users_table from '../models/user';
-var mongojs = require('mongojs');
-var db = require('../config/db_config.js').mongojs;
+import User from '../models/user';
 
 // AUTHENTICATION middleware to use in other routes that need authentication
 export default (req, res, next) => {
@@ -22,8 +20,7 @@ export default (req, res, next) => {
         res.status(401).json({ error: 'Failed to authenticate' });
       } else {
         // console.log(decoded)
-
-        db.user.findOne({_id: mongojs.ObjectId(decoded.id)}, function(err, user) {
+        User.findById({_id: decoded.id}, function(err, user) {
           if (err) throw err;
 
           if (!user) {

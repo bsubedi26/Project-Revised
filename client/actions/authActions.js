@@ -26,7 +26,7 @@ export function login(data) {
       const token = res.data.token;
       // If user credentials is invalid redirect user back to login page
       if (token === undefined) {
-        browserHistory.push('/#/signup');
+        console.log('Log from authActions.js: Token is undefined')
       }
       else {
       localStorage.setItem('jwtToken', token);

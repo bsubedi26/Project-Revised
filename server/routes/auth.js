@@ -2,10 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config';
-var db = require('../config/db_config.js');
-var db2 = require('../config/db_config.js').monk;
-var db3 = require('../config/db_config.js').mongoose;
-
+import User from '../models/user';
 
 let router = express.Router();
 
@@ -13,11 +10,9 @@ let router = express.Router();
 router.post('/', (req, res) => {
 
   const { identifier, password } = req.body;
-  console.log('console post')
+  console.log('console auth post')
 
-  
-
-  db2.findOne({username: identifier}, function(err, user) {
+  User.findOne({username: identifier}, function(err, user) {
     if (err) throw err;
 
     if (user) {
@@ -38,9 +33,14 @@ router.post('/', (req, res) => {
             // send jwt token back as json
             res.json({token})
           } // close if response statement
+          else {
+            // If password don't match send form error
+            res.json({ errors: { form: 'Invalid Credentials' } });
+          }
       }) //close bcrypt compare password
     }
     else {
+      // If login credentials don't match send form error
       res.json({ errors: { form: 'Invalid Credentials' } });
     }
   })

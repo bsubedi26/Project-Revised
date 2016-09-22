@@ -18,12 +18,9 @@ app.use(session({
   secret: 'supersecretstring12345!',
   saveUninitialized: true,
   resave: true,
-  store: new MongoStore({ mongooseConnection: db })
+  // store: new MongoStore({ mongooseConnection: db })
 }))
-
-// Advanced usage
-// const connection = mongoose.createConnection(connectionOptions);
-
+/////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 import users from './server/routes/users';
 import auth from './server/routes/auth';

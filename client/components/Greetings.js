@@ -3,6 +3,7 @@ import SignUp from './signup/SignUp';
 import { connect } from 'react-redux';
 import { addNewData } from '../actions/newDataActions';
 import { Link } from 'react-router';
+import { CardStack, Card } from 'react-cardstack';
 
 class Greetings extends React.Component {
   
@@ -28,6 +29,24 @@ class Greetings extends React.Component {
                 <h1 className="section-heading">Section Heading</h1>
                 <p className="lead section-lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 <p className="section-paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo voluptatem quae delectus odit vel itaque amet.</p>
+              
+
+<CardStack
+    height={500}
+    width={400}
+    background='#f8f8f8'
+    hoverOffset={25}>
+
+    <Card background='#2980B9'>
+        <h1>Number 1</h1>
+    </Card>
+
+    <Card background='#27AE60'>
+        <h1>Number 2</h1>
+    </Card>
+
+</CardStack>
+
               </div>
 
               <div className="col-lg-6">

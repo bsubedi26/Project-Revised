@@ -1,18 +1,21 @@
-var mongojs = require('mongojs');
-var databaseUrl = 'REACT';
-var collections = ["user"];
-var db = mongojs(databaseUrl, collections);
-db.on('error', function (err) {
-  console.log('MongoDB Error: ', err);
+const mongoose = require('mongoose');
+// var db = mongoose.connection;
+// mongoose.connect('mongodb://localhost:27017/Project');
+// mongoose.set('debug', true);
+// db.on('error', console.error.bind(console, '# Mongo DB: connection error:'));
+// // module.exports = db;
+
+var Schema = mongoose.Schema;
+
+// create a schema
+var userSchema = new Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  email: { type: String, required: true, unique: true }
 });
-db.on('connect', function () {
-    console.log('database connected')
-})
 
-module.exports = db;
-
-// monk DB config
-// var monk = require('monk');
-// var db2 = monk('localhost:27017/REACT');
-// var users_table = db2.get('user');
-// module.exports = users_table;
+// the schema is useless so far
+// we need to create a model using it
+var User = mongoose.model('User', userSchema);
+// make this available to our users in our Node applications
+module.exports = User;

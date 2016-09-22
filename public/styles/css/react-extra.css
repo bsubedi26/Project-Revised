@@ -51,6 +51,15 @@ h2 {
 .login-form {
   margin-top: 50px;
 }
+#error {
+  color: black;
+  background-color: #993333;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+}
+#login-title {
+  font-size: 44px;
+}
 body {
     margin-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
