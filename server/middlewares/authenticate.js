@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config';
 import users_table from '../models/user';
 var mongojs = require('mongojs');
-var db = require('../config/db_config.js');
+var db = require('../config/db_config.js').mongojs;
 
 // AUTHENTICATION middleware to use in other routes that need authentication
 export default (req, res, next) => {

@@ -21,7 +21,9 @@ class MidiArchives extends React.Component {
       input: "",
       tab: "",
       playing: "",
-      tmp: []
+      tmp: [],
+      starValue: 0,
+      favorites: []
     }
   }
 
@@ -121,6 +123,18 @@ class MidiArchives extends React.Component {
     MIDIjs.stop();
   }
 
+  star(e) {
+    e.preventDefault();
+    var title = e.target.getAttribute('data-name');
+    
+    
+
+    this.state.starValue++;
+    axios.post('/api/midi/star', {title: title, star: this.state.starValue}).then(function(data) {
+      console.log(data)
+    })
+  }
+
   render() {
    var self = this;
 
@@ -148,6 +162,12 @@ class MidiArchives extends React.Component {
             <a href={`/midi/${self.state.tab}/${midi}`}><button data-name={midi} type="button" className="controlBtns btn btn-default btn-md">
               <span data-name={midi} className="glyphicon glyphicon-download-alt"></span>
             </button></a>
+
+
+            <button data-name={midi} onClick={self.star.bind(self)} type="button" className="controlBtns btn btn-default btn-md">
+            <span data-name={midi} className="glyphicon glyphicon-star"></span>
+            </button>
+
           
         </div>
         </div>

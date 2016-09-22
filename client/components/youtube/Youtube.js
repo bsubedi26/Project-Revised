@@ -53,6 +53,17 @@ class Youtube extends React.Component {
     console.log(this.state)
   }
  
+ starClicked(e) {
+   e.preventDefault()
+   axios.get('/api/midi/getFavorites').then( (data) => {
+     this.setState(data)
+   })
+
+   this.setState({
+
+   })
+ }
+
   render() {
     var self = this;
 
@@ -81,6 +92,23 @@ class Youtube extends React.Component {
               </div>
             </div>
           </div>
+          <hr />
+            <button type="button" className="controlBtns btn btn-default btn-md">
+            <span  className="glyphicon glyphicon-step-backward"></span>
+            </button>
+
+            <button type="button" className="controlBtns btn btn-default btn-md">
+            <span  className="glyphicon glyphicon-stop"></span>
+            </button>
+
+
+            <button type="button" className="controlBtns btn btn-default btn-md">
+            <span  className="glyphicon glyphicon-fast-forward"></span>
+            </button>
+
+            <button onClick={self.starClicked.bind(self)} type="button" className="controlBtns btn btn-default btn-md">
+            <span  className="glyphicon glyphicon-star"></span>
+            </button>
           
         </div>
       </div>

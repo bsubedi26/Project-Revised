@@ -28,8 +28,20 @@ class LoginForm extends React.Component {
     return true;
   }
 
+  componentDidMount() {
+    this.setState()
+  }
+
   onSubmit(e) {
     e.preventDefault();
+
+    var userData = this.state;
+    axios.post('/api/users/signup', userData).then( (response) => {
+        var data = response.data;
+        this.setState(data);
+        this.context.router.push('/login');
+    })
+
     this.props.login(this.state).then(
       
       (res) => {
@@ -56,8 +68,6 @@ class LoginForm extends React.Component {
     return (
       <form className="well login-form" onSubmit={this.onSubmit}>
         <h1 className="text-center">Login</h1>
-
-        { errors.form && <div className="alert alert-danger">{errors.form}</div> }
 
         <TextFieldGroup
           field="identifier"

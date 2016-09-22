@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios'
 
+var store = '../../store/Store';
+
 class SignUp extends React.Component {
 
 constructor(props, context) {
@@ -9,6 +11,10 @@ constructor(props, context) {
     this.state = {
 
     }
+}
+
+componentDidMount() {
+
 }
 
 inputChanged(event) {
@@ -20,7 +26,9 @@ inputChanged(event) {
 handleSubmit(e) {
  e.preventDefault();
  var userData = this.state;
-    axios.post('/api/users/signup', userData).then( () => {
+    axios.post('/api/users/signup', userData).then( (response) => {
+        var data = response.data;
+        this.setState(data);
         this.context.router.push('/login');
     })
 }
@@ -45,18 +53,18 @@ handleSubmit(e) {
         </div>
         <div className="form-group">
           <label htmlFor="email" className="control-label">Email</label>
-          <input onChange={this.inputChanged.bind(this)} type="email" className="form-control" id="email" placeholder="Email" data-error="Bruh, that email address is invalid" required />
+          <input onChange={this.inputChanged.bind(this)} type="email" className="form-control" id="email" placeholder="Email" data-error="Bruh, that email address is invalid"  />
           <div className="help-block with-errors" />
         </div>
         <div className="form-group">
           <label htmlFor="password" className="control-label">Password</label>
           <div className="form-inline row">
             <div className="form-group col-sm-6">
-              <input onChange={this.inputChanged.bind(this)} type="password" data-minlength={1} className="form-control" id="password" placeholder="Password" required />
+              <input onChange={this.inputChanged.bind(this)} type="password" data-minlength={1} className="form-control" id="password" placeholder="Password"  />
               <div className="help-block">Minimum of 6 characters</div>
             </div>
             <div className="form-group col-sm-6">
-              <input type="password" className="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm" required />
+              <input type="password" className="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm"  />
               <div className="help-block with-errors" />
             </div>
           </div>

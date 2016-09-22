@@ -15,7 +15,7 @@ export default (
     <IndexRoute component={Greetings} />
     <Route path="login" component={LoginPage} />
     <Route path="dashboard" component={requireAuth(Dashboard)} />
-    <Route path="midi-archives" component={requireAuth(MidiArchives)} />
+    <Route path="midi-archives" component={MidiArchives} />
     <Route path="youtube" component={Youtube} />
   </Route>
 )

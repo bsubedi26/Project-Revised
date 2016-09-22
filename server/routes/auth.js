@@ -3,6 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config';
 var db = require('../config/db_config.js');
+var db2 = require('../config/db_config.js').monk;
+var db3 = require('../config/db_config.js').mongoose;
+
 
 let router = express.Router();
 
@@ -12,7 +15,9 @@ router.post('/', (req, res) => {
   const { identifier, password } = req.body;
   console.log('console post')
 
-  db.user.findOne({username: identifier}, function(err, user) {
+  
+
+  db2.findOne({username: identifier}, function(err, user) {
     if (err) throw err;
 
     if (user) {
@@ -21,10 +26,14 @@ router.post('/', (req, res) => {
           // response === true: correct password 
 			    if (response == true) {
             console.log('right password')
+
+            req.session.userid = user._id;
+            req.session.save();
+            console.log(req.session)
             const token = jwt.sign({
-              id: user._id,
-              username: user.username,
-              email: user.email
+                id: user._id,
+                username: user.username,
+                email: user.email
             }, config.jwtSecret);
             // send jwt token back as json
             res.json({token})
