@@ -2438,7 +2438,7 @@ output {
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857;
-  color: #B74934;
+  color: black;
   background-color: #fff;
   background-image: none;
   border: 1px solid #ccc;
@@ -3395,7 +3395,7 @@ tbody.collapse.in {
   font-size: 14px;
   font-weight: normal;
   line-height: 1;
-  color: #B74934;
+  color: black;
   text-align: center;
   background-color: #A8A8A1;
   border: 1px solid #ccc;
@@ -3928,7 +3928,7 @@ tbody.collapse.in {
   .navbar-inverse .navbar-text {
     color: #c5ba97; }
   .navbar-inverse .navbar-nav > li > a {
-    color: #c5ba97; }
+    color: #f1d16d; }
     .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
       color: #fff;
       background-color: transparent; }

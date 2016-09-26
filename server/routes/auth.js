@@ -35,13 +35,13 @@ router.post('/', (req, res) => {
           } // close if response statement
           else {
             // If password don't match send form error
-            res.json({ errors: { form: 'Invalid Credentials' } });
+            res.json({ errors: { form: 'Invalid Credentials: Incorrect Password!' } });
           }
       }) //close bcrypt compare password
     }
     else {
       // If login credentials don't match send form error
-      res.json({ errors: { form: 'Invalid Credentials' } });
+      res.json({ errors: { form: 'Invalid Credentials: User does not exist!' } });
     }
   })
 });

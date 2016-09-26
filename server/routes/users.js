@@ -59,7 +59,9 @@ router.post('/signup', async function(req,res) {
     var user = new User({
         username: username,
         password: hashed,
-        email: email
+        email: email,
+        midi_token: 50,
+        video_token: 50
       });
         
     user.save(function (err, user) {

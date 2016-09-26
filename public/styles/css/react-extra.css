@@ -63,3 +63,36 @@ h2 {
 body {
     margin-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
+
+.btn {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+ 
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+ 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: #8b6c0e;
+}
+ 
+.btn-primary:active, .btn-primary.active {
+    background: #8b6c0e;
+    box-shadow: none;
+}
+
+.controlBtns {
+  background-color: #312f2a;
+  color: white;
+  }
+
+input {
+  padding:5px;
+  font-size:16px;
+  font-family:'Lucida Casual', 'Comic Sans MS';
+  color: black;
+}

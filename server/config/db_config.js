@@ -23,7 +23,6 @@ module.exports.monk = users_table;
 
 const mongoose = require('mongoose');
 var db3 = mongoose.connection;
-// mongoose.connect('mongodb://localhost/Project');
 // mongoose.connect('mongodb://localhost:27017/Project');
 mongoose.connect('mongodb://heroku_556g1lf1:nfdct6fd4c0kuovucfn09m7oq3@ds023475.mlab.com:23475/heroku_556g1lf1');
 mongoose.set('debug', true);

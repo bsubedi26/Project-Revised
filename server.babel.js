@@ -26,14 +26,14 @@ import users from './server/routes/users';
 import auth from './server/routes/auth';
 import events from './server/routes/events';
 import midi from './server/routes/midi';
-import scrape from './server/routes/scrape';
+import youtube from './server/routes/youtube';
 import authenticate from './server/middlewares/authenticate';
 
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/events', events);
 app.use('/api/midi', authenticate, midi);
-app.use('/api/scrape', scrape);
+app.use('/api/youtube', youtube);
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 const PORT = process.env.PORT || 8000;

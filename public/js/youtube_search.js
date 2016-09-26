@@ -2,6 +2,7 @@ var INITIAL_VID_THUMBS = 5;
 
 var player;
 var currentVideoId = "FVdH9YcB3Dg";
+var youtubeTitle = "";
 
 function gapiInit() {
   gapi.client.setApiKey('AIzaSyChxpylfmpVchkHyLQH6wLWH7cxtgftRmU');
@@ -205,6 +206,8 @@ function updateVideoDisplay(videos) {
     var img = $("<img />").attr("src", videos[i].snippet.thumbnails.default.url);
     var a = $("<a />").attr("href", "javascript:loadAndPlayVideo('" + videoId + "', " + i + ")");
     var title = $("<div />").html(videos[i].snippet.title);
+    youtubeTitle = videos[0].snippet.title
+    console.log(youtubeTitle)
     playlist.append(a.append(img).append(title));
   }
   var playlistWrapper = $("#playlistWrapper");
