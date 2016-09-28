@@ -5,8 +5,8 @@ var currentVideoId = "FVdH9YcB3Dg";
 var youtubeTitle = "";
 
 function gapiInit() {
-  gapi.client.setApiKey('AIzaSyChxpylfmpVchkHyLQH6wLWH7cxtgftRmU');
-  // gapi.client.setApiKey("AIzaSyBoBjj5MOkNFhoSYDxz9Af_CddmWpNK-HA");
+  // gapi.client.setApiKey('AIzaSyChxpylfmpVchkHyLQH6wLWH7cxtgftRmU');
+  gapi.client.setApiKey("AIzaSyBoBjj5MOkNFhoSYDxz9Af_CddmWpNK-HA");
   gapi.client.load('youtube', 'v3').then(onYouTubeDataAPIReady);
 }
 
@@ -25,28 +25,12 @@ function onYouTubeDataAPIReady() {
     var searchTerm = $('<div/>').text(getHash()).html(); // escape html
     // $("#searchBox").val(searchTerm).focus();
   } else {
-    var defaultSearches = [ "YouTube", "AutoTune", "Rihanna", "Far East Movement", "Glee Cast", "Nelly", "Usher", "Katy Perry", "Taio Cruz", "Eminem", "Shakira", "Kesha", "B.o.B.", "Taylor Swift", "Akon", "Bon Jovi", "Michael Jackson", "Lady Gaga", "Paramore", "Jay Z", "My Chemical Romance", "The Beatles", "Led Zepplin", "Guns N Roses", "AC DC", "System of a Down", "Aerosmith", "Tetris", "8-bit", "Borat", "Basshunter", "Fallout Boy", "Blink 182", "Pink Floyd", "Still Alive", "Men at Work", "MGMT", "Justin Bieber", "The Killers", "Bed intruder song", "Baba O Riley", "Billy Joel", "Drake", "Jay Sean" ];
-    var randomNumber = Math.floor(Math.random() * defaultSearches.length);
-    $("#searchBox").val(defaultSearches[randomNumber]).select().focus();
+    // var defaultSearches = [ "YouTube", "AutoTune", "Rihanna", "Far East Movement", "Glee Cast", "Nelly", "Usher", "Katy Perry", "Taio Cruz", "Eminem", "Shakira", "Kesha", "B.o.B.", "Taylor Swift", "Akon", "Bon Jovi", "Michael Jackson", "Lady Gaga", "Paramore", "Jay Z", "My Chemical Romance", "The Beatles", "Led Zepplin", "Guns N Roses", "AC DC", "System of a Down", "Aerosmith", "Tetris", "8-bit", "Borat", "Basshunter", "Fallout Boy", "Blink 182", "Pink Floyd", "Still Alive", "Men at Work", "MGMT", "Justin Bieber", "The Killers", "Bed intruder song", "Baba O Riley", "Billy Joel", "Drake", "Jay Sean" ];
+    // var randomNumber = Math.floor(Math.random() * defaultSearches.length);
+    // $("#searchBox").val(defaultSearches[randomNumber]).select().focus();
   }
   onBodyLoad();
   doInstantSearch();
-}
-
-function onBodyLoad() {
-  currentSearch = "";
-  currentSuggestion = "";
-  currentVideoId = "";
-  playlistShowing = false;
-  playlistArr = [];
-  currentPlaylistPos = 0;
-  currentPlaylistPage = 0;
-  xhrWorking = false;
-  pendingSearch = false;
-  pendingDoneWorking = false;
-  playerState = -1;
-  hashTimeout = false;
-  loadRandomTip();
 }
 
 function doInstantSearch() {
@@ -66,7 +50,7 @@ function doInstantSearch() {
     clearVideo();
     updateHash("");
     currentSuggestion = "";
-    updateSuggestedKeyword("<strong>Search YouTube Instantly</strong>");
+    updateSuggestedKeyword("Nothing - Type above to Search!");
     return;
   }
   searchBox.attr("class", "statusLoading");
@@ -78,6 +62,23 @@ function doInstantSearch() {
     dataType: "script"
   });
   xhrWorking = true;
+}
+
+
+function onBodyLoad() {
+  currentSearch = "";
+  currentSuggestion = "";
+  currentVideoId = "";
+  playlistShowing = false;
+  playlistArr = [];
+  currentPlaylistPos = 0;
+  currentPlaylistPage = 0;
+  xhrWorking = false;
+  pendingSearch = false;
+  pendingDoneWorking = false;
+  playerState = -1;
+  hashTimeout = false;
+  loadRandomTip();
 }
 
 function onKeyDown(e) {
@@ -407,7 +408,7 @@ String.prototype.toTitleCase = function() {
 function loadYouTubeIframeAPI () {
   var tag = document.createElement('script');
 
-  tag.src = "https://www.youtube.com/iframe_api";
+  tag.src = "http://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }

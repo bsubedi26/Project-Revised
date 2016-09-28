@@ -1,65 +1,75 @@
 import express from 'express';
-var db = require('../config/db_config.js').mongojs;
-var db2 = require('../config/db_config.js').monk;
-
-var mongojs = require('mongojs');
+import User from '../models/user';
 const fs = require('fs');
 const path = require('path');
+const formidable = require('formidable');
 
 var router = express.Router();
 
-//GET route for getting user favorite midi files
-router.get('/getFavorites', function(req,res) {
-    console.log(req.user)
-    db.user.findOne({_id: mongojs.ObjectId(req.user._id)}, function(err, user) {
-      if (err) throw err;
-      res.json(user);
+var tab = [];
+// push the tab the user is currently on to the tab array
+router.post('/tab', function(req,res) {
+  tab.push(req.body.tab)
+  console.log(tab)
+})
 
+router.post('/upload', function(req,res) {
+  // console.log('----------------')
+  // console.log(req.session.username)
+  
+    // create an incoming form object
+  var form = new formidable.IncomingForm();
+
+  // specify that we want to allow the user to upload multiple files in a single request
+  form.multiples = true;
+
+  // Save the uploaded file to the folder of the selected tab 
+  // form.uploadDir = path.join(__dirname, '../../public/user/'+req.session.username);
+  form.uploadDir = path.join(__dirname, '../../public/midi/'+tab.pop());
+
+
+  // every time a file has been uploaded successfully,
+  // rename it to it's orignal name
+  form.on('file', function(field, file) {
+    fs.rename(file.path, path.join(form.uploadDir, file.name));
+  });
+
+  // log any errors that occur
+  form.on('error', function(err) {
+    console.log('An error has occured: \n' + err);
+  });
+
+  // once all the files have been uploaded, send a response to the client
+  form.on('end', function() {
+    res.end('success');
+  });
+
+  // parse the incoming request containing the form data
+  form.parse(req);
+
+})
+router.post('/updateToken/', function(req,res) {
+
+  const {_id, token} = req.body;
+  User.findOneAndUpdate({ _id: _id }, { $set: { midi_token: token } }, function(err, doc) {
+      if (err) throw err;
+      console.log(doc)
+      
+  });
+
+})
+
+router.get('/setMidiToken/:id', function(req,res) {
+    var id = req.params.id
+     User.findOne({_id: id}, '_id, midi_token', function(err, user) {
+      if (err) throw err;
+      console.log(user)
+      res.json(user)
     })
 })
 
-// POST route for adding user favorite midi files
-router.post('/addFavorites', function(req,res) {
-  console.log(req.body)
-  const {user, favorites} = req.body;
-  
-  db.user.findAndModify({
-    query: { username: user },
-    update: { $set: { favoriteMidis: favorites } },
-    new: true
-  }, function (err, docs, lastErrorObject) {
-    if (err) throw err;
-    // docs.favoriteMidis === favorites
-    console.log(docs)
-  })
-
-})
-
-// router.get('/contemporary', function(req,res) {  
-//   fs.readdir(path.join(__dirname, '../../public/midi/contemporary'), (err, files) => {
-//     if (err) throw err;
-//     // files is an array that have the names of the midi files in the directory (type: array of strings)
-//     var arr = [];
-//     arr.push(files);
-//     res.json(arr);
-
-//     //Create an object from the array of files 
-//     // var newArray = arr.map(function(file, i) {
-//     //   return {
-//     //     name: file,
-//     //     liked: false,
-//     //     count: 0
-//     //   }
-//     // })
-
-//   })
-// });
-
 router.get('/folder/:name', function(req,res) {
   var name = req.params.name;
-  console.log("-----")
-  console.log(req.session)
-  var userid = req.session.userid
 
   fs.readdir(path.join(__dirname, '../../public/midi/'+name), (err, files) => {
     if (err) throw err;
@@ -70,33 +80,4 @@ router.get('/folder/:name', function(req,res) {
   })
 });
 
-router.post('/star', function(req,res) {
-  console.log(req.session)
-  console.log(req.body)
-  
-  var userid = req.session.userid
-  console.log(userid)
-
-  var favorites = {
-    title: req.body.title,
-    star: req.body.star
-  } 
-
-db2.findAndModify(
-      {
-        "query": { "_id": userid },
-        "update": { "$push": { 
-            
-           favorites: favorites
-        }},
-       
-      },
-      function(err,doc) {
-        if (err) throw err;
-        console.log( doc );
-        res.json(doc)
-      }
-);
-
-})
 export default router;

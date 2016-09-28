@@ -1,0 +1,65 @@
+.btn:focus, .upload-btn:focus{
+  outline: 0 !important;
+}
+
+body {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+}
+
+.row {
+  margin-top: 30px;
+}
+
+.upload-btn {
+  color: #ffffff;
+  background-color: #3e3c38;
+  border: none;
+}
+
+.upload-btn:hover,
+.upload-btn:focus,
+.upload-btn:active,
+.upload-btn.active {
+  color: #ffffff;
+  background-color: #edc345;
+  border: none;
+}
+
+h4 {
+  padding-bottom: 30px;
+  color: #B8BDC1;
+}
+
+.glyphicon-upload {
+  font-size: 5em;
+  color: #666666;
+}
+
+.panel {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#upload-input {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 450px;
+  }
+}
+.progress-bar-success {
+    background-image: -webkit-linear-gradient(top,#333333 0,#333333 100%);
+    background-image: -o-linear-gradient(top,#333333 0,#333333 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#333333),to(#333333));
+    background-image: linear-gradient(to bottom,#333333 0,#333333 100%);
+    background-repeat: repeat-x;
+}

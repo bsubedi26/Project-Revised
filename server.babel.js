@@ -9,6 +9,11 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/dist'));
 
+app.get('/', function(req,res) {
+	res.sendFile(path.join(__dirname, '/dist/index.html'))
+})
+
+
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 const db = require('./server/config/db_config').mongoose;
@@ -18,7 +23,9 @@ app.use(session({
   secret: 'supersecretstring12345!',
   saveUninitialized: true,
   resave: true,
-  // store: new MongoStore({ mongooseConnection: db })
+  store: new MongoStore({
+     mongooseConnection: db 
+    })
 }))
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -32,7 +39,7 @@ import authenticate from './server/middlewares/authenticate';
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/events', events);
-app.use('/api/midi', authenticate, midi);
+app.use('/api/midi', midi);
 app.use('/api/youtube', youtube);
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////

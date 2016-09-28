@@ -2916,7 +2916,7 @@ select[multiple].input-lg,
   border-color: #4d6782; }
   .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #445b72;
+    background-color: #345e8a;
     border-color: #37495c; }
   .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
     background-image: none; }

@@ -4,64 +4,33 @@ import isEmpty from 'lodash/isEmpty';
 import jwt from 'jsonwebtoken';
 import config from '../config';
 import User from '../models/user';
-
-var db = require('../config/db_config.js').mongojs;
-var db2 = require('../config/db_config.js').monk;
-
+const path = require('path');
 var router = express.Router();
-
-// // POST for user login
-// router.post('/login', (req, res) => {
-
-//   const { identifier, password } = req.body;
-//   console.log('console post')
-//   console.log(req.body)
-
-//   User.findOne({ username: identifier }, function (err, user) {
-//     if (err) throw err;
-//     console.log(user)
-  
-//     if (user) {
-//       bcrypt.compare(password, user.password, function(err, response) {
-// 			    if (err) throw err;
-//           // response === true: correct password 
-// 			    if (response == true) {
-//             console.log('right password')
-//             req.session.userid = user._id;
-//             req.session.save();
-            
-//             const token = jwt.sign({
-//                 id: user._id,
-//                 username: user.username,
-//                 email: user.email
-//             }, config.jwtSecret);
-//             // send jwt token back as json
-//             setAuthorizationToken(token);
-
-//             res.json({token})
-//           } // close if response statement
-//       }) //close bcrypt compare password
-//     }
-//     else {
-//       res.json({ errors: { form: 'Invalid Credentials' } });
-//     }
-  
-
-//   })
-
-// });
+const fs = require('fs');
 
 // POST for user signup
 router.post('/signup', async function(req,res) {
   const { username, password, email } = req.body;
+
+    function makeDir(dir) {
+      if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+      }
+    }
+
+  
   hashPassword(password).then(function(hashed) {
+
+    var pathToFolder = path.join(__dirname, '../../public/user/'+username)
+    //makeDir(pathToFolder)
 
     var user = new User({
         username: username,
         password: hashed,
         email: email,
-        midi_token: 50,
-        video_token: 50
+        midi_token: 10,
+        video_token: 10
+        
       });
         
     user.save(function (err, user) {
@@ -75,7 +44,6 @@ router.post('/signup', async function(req,res) {
         res.json(response)
       }
       else {
-        //TODO: return page with errors
         var response = {
           error: true
         }
@@ -102,13 +70,3 @@ function hashPassword(password) {
 }
 
 export default router;
-
-// router.get('/:identifier', (req, res) => {
-//   User.query({
-//     select: [ 'username', 'email' ],
-//     where: { email: req.params.identifier },
-//     orWhere: { username: req.params.identifier }
-//   }).fetch().then(user => {
-//     res.json({ user });
-//   });
-// });

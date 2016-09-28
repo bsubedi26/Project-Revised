@@ -7,12 +7,12 @@
     -o-background-size: cover;
 }
 
-.image-bg-fluid-height {
-	background: url('/images/banner.jpg') no-repeat center center scroll;
-    padding: 100px 0;
-    width: 100%;
-    min-height: 500px;
-    display: block;
+html { 
+  background: url('/images/banner.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .image-bg-fixed-height {
@@ -29,8 +29,9 @@ section {
 }
 
 .section-heading {
-    margin: 30px 0;
+    margin-top: 5px;
     font-size: 4em;
+    color: #577492;
 }
 
 .section-lead {

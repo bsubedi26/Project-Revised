@@ -1,6 +1,7 @@
 var mongojs = require('mongojs');
-var databaseUrl = 'mongodb://heroku_556g1lf1:nfdct6fd4c0kuovucfn09m7oq3@ds023475.mlab.com:23475/heroku_556g1lf1';
-// var databaseUrl = 'Project';
+// var databaseUrl = 'mongodb://heroku_556g1lf1:nfdct6fd4c0kuovucfn09m7oq3@ds023475.mlab.com:23475/heroku_556g1lf1';
+var databaseUrl = 'mongodb://heroku_qbjrld6z:e8b4b9r9a4m9a8bh367pk4ua3e@ds041516.mlab.com:41516/heroku_qbjrld6z'
+//var databaseUrl = 'Project';
 
 var collections = ["user"];
 var db = mongojs(databaseUrl, collections);
@@ -23,8 +24,8 @@ module.exports.monk = users_table;
 
 const mongoose = require('mongoose');
 var db3 = mongoose.connection;
-// mongoose.connect('mongodb://localhost:27017/Project');
-mongoose.connect('mongodb://heroku_556g1lf1:nfdct6fd4c0kuovucfn09m7oq3@ds023475.mlab.com:23475/heroku_556g1lf1');
+//mongoose.connect('mongodb://localhost:27017/Project');
+mongoose.connect('mongodb://heroku_qbjrld6z:e8b4b9r9a4m9a8bh367pk4ua3e@ds041516.mlab.com:41516/heroku_qbjrld6z');
 mongoose.set('debug', true);
 db3.on('error', console.error.bind(console, '# Mongo DB: connection error:'));
 module.exports.mongoose = db3;

@@ -48,6 +48,10 @@ h2 {
   background-color: #303136;
 }
 
+.well-button-alternative {
+  background-color: #5a5931;
+}
+
 .login-form {
   margin-top: 50px;
 }
@@ -95,4 +99,56 @@ input {
   font-size:16px;
   font-family:'Lucida Casual', 'Comic Sans MS';
   color: black;
+}
+
+.player-text {
+  float: left;
+}
+
+.midi-title {
+  padding-top: 30px;
+  font-size: 44px;
+}
+
+.main-upload {
+  background-color: white;
+}
+
+.card-title {
+  font-size: 44px;
+  color: black;
+}
+
+.card-text {
+  color: black;
+  font-size: 20px;
+}
+
+.btn-dl {
+   background-color: hsl(234, 17%, 65%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e4e4eb", endColorstr="#9699b4");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#e4e4eb), to(#9699b4));
+  background-image: -moz-linear-gradient(top, #e4e4eb, #9699b4);
+  background-image: -ms-linear-gradient(top, #e4e4eb, #9699b4);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e4e4eb), color-stop(100%, #9699b4));
+  background-image: -webkit-linear-gradient(top, #e4e4eb, #9699b4);
+  background-image: -o-linear-gradient(top, #e4e4eb, #9699b4);
+  background-image: linear-gradient(#e4e4eb, #9699b4);
+  border-color: #9699b4 #9699b4 hsl(234, 17%, 58.5%);
+  color: #333 !important;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.42);
+  -webkit-font-smoothing: antialiased;
+}
+
+#page1 {
+  text-align: center;
+  background: url('/images/win.jpg') center center no-repeat;
+  background-size: cover;
+  color: #fff;
+}
+
+.well-midi {
+    border: 1px solid #5d5346;
+    border-radius: 30px;
 }

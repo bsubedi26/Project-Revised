@@ -14,6 +14,7 @@ router.post('/', (req, res) => {
 
   User.findOne({username: identifier}, function(err, user) {
     if (err) throw err;
+    console.log(user)
 
     if (user) {
       bcrypt.compare(password, user.password, function(err, response) {
@@ -22,7 +23,8 @@ router.post('/', (req, res) => {
 			    if (response == true) {
             console.log('right password')
 
-            req.session.userid = user._id;
+            req.session._id = user._id;   
+            req.session.username = user.username;            
             req.session.save();
             console.log(req.session)
             const token = jwt.sign({
